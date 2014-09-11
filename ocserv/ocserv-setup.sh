@@ -1,4 +1,8 @@
 #!/bin/sh
+
+
+
+
 yum update -y
 yum install -y autoconf gnutls-utils automake gcc gmp-devel bison flex  pcre-devel tar net-tools  openssl openssl-devel curl-devel bind-utils  libtasn1-devel zlib zlib-devel trousers trousers-devel gmp-devel gmp xz texinfo libnl-devel libnl tcp_wrappers-libs tcp_wrappers-devel tcp_wrappers dbus dbus-devel ncurses-devel pam pam-devel readline-devel bison bison-devel flex gcc automake autoconf wget
 clear
@@ -86,6 +90,59 @@ echo "export LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/">> /etc/profile
 echo "export PATH=$PATH:/opt/bin">> /etc/profile
 
 
+
+
+####
+# 证书，没有就生产
+#
+####
+
+#服务器的证书和key文件，放在本脚本的同目录下，key文件的权限应该是600或者400
+servercert=server-cert.pem
+serverkey=server-key.pem
+
+#检测是否有证书和key文件
+cd ..
+if [[ ! -f "$servercert" ]] || [[ ! -f "$serverkey" ]]; then
+    #创建ca证书和服务器证书（参考http://www.infradead.org/ocserv/manual.html#heading5）
+    certtool --generate-privkey --outfile ca-key.pem
+
+    cat << _EOF_ >ca.tmpl
+cn = "8dat.com VPN"
+organization = "8dat.com"
+serial = 1
+expiration_days = 3650
+ca
+signing_key
+cert_signing_key
+crl_signing_key
+_EOF_
+
+    certtool --generate-self-signed --load-privkey ca-key.pem \
+    --template ca.tmpl --outfile ca-cert.pem
+    certtool --generate-privkey --outfile $serverkey
+
+    cat << _EOF_ >server.tmpl
+cn = "8dat.com VPN"
+o = "stunnel"
+serial = 2
+expiration_days = 3650
+signing_key
+encryption_key #only if the generated key is an RSA one
+tls_www_server
+_EOF_
+
+    certtool --generate-certificate --load-privkey $serverkey \
+    --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem \
+    --template server.tmpl --outfile $servercert
+fi
+
+#把证书复制到ocserv的配置目录
+cp "$servercert" /etc/ocserv/ && cp "$serverkey" /etc/ocserv/
+
+
+
+
 ####
 # 修改系统配置，允许转发
 #
@@ -100,14 +157,14 @@ sysctl -p
 # Download config file
 ####
 wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/etc/ocserv/ocserv.conf
-mv ocserv.conf /etc/ocserv/
+mv ocserv.conf /etc/ocserv
 
 ####
 # 安装客户端第一次访问时同步的配置文件
 # Download profile.xml file
 ####
 wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/etc/ocserv/profile.xml
-mv profile.xml /etc/ocserv/
+mv profile.xml /etc/ocserv
 
 
 ####
