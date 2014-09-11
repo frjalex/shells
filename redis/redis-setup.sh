@@ -13,7 +13,7 @@ make
 make test
 
 
-#redis 配置
+#redis 配置d
 cd src
 cp redis-server /usr/local/bin/
 cp redis-cli /usr/local/bin/
