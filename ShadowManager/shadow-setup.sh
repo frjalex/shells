@@ -9,3 +9,8 @@ chmod +x ShadowManage
 cd /var/proxy/
 wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/server  --no-check-certificate
 chmod +x server
+
+cd /var/proxy/web/
+wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/web.zip  --no-check-certificate
+unzip web.zip
+rm -f web.zip
