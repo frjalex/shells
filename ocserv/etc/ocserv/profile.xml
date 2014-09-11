@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnyConnectProfile xmlns="http://schemas.xmlsoap.org/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/encoding/ AnyConnectProfile.xsd">
+
+<ClientInitialization>
+<AutoUpdate>true</AutoUpdate>
+<BypassDownloader>true</BypassDownloader>
+<UseStartBeforeLogon>false</UseStartBeforeLogon>
+<StrictCertificateTrust>false</StrictCertificateTrust>
+<RestrictPreferenceCaching>false</RestrictPreferenceCaching>
+<RestrictTunnelProtocols>IPSec</RestrictTunnelProtocols>
+<CertEnrollmentPin>pinAllowed</CertEnrollmentPin>
+<CertificateMatch>
+<KeyUsage>
+<MatchKey>Digital_Signature</MatchKey>
+</KeyUsage>
+<ExtendedKeyUsage>
+<ExtendedMatchKey>ClientAuth</ExtendedMatchKey>
+</ExtendedKeyUsage>
+</CertificateMatch>
+</ClientInitialization>
+
+<ServerList>
+<HostEntry>
+<HostName>美国德克萨斯</HostName>
+<HostAddress>dkss.8dat.com</HostAddress>
+</HostEntry>
+<HostEntry>
+<HostName>新加坡</HostName>
+<HostAddress>xjp.8dat.com</HostAddress>
+</HostEntry>
+</ServerList>
+</AnyConnectProfile>
