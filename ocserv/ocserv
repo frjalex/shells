@@ -4,6 +4,7 @@
 # description:  ocserv is a cisco anyconnect server
 # processname: ocserv
 # config:      /etc/ocserv/ocserv.conf
+# pidfile:     /var/run/ocserv.pid
 
 
 
