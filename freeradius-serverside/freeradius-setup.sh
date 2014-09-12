@@ -32,6 +32,10 @@ mysql>exit;
 #导入表结构
 mysql -uroot -p$password radius < /etc/raddb/sql/mysql/schema.sql
 
+wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/radius-db.sql
+#导入表初始化结构
+mysql -uroot -p$password radius < radius-db.sql
+
 clear
 
 #####
