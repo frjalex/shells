@@ -6,7 +6,8 @@
 # config:      /etc/ocserv/ocserv.conf
 # pidfile:     /var/run/ocserv.pid
 
-
+# Source function library.
+. /etc/rc.d/init.d/functions
 
 LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
 export PATH=$PATH:/opt/bin
@@ -52,7 +53,7 @@ case "$1" in
         $1
         ;;
     stop)
-       
+
         $1
         ;;
     restart)
