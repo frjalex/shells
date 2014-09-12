@@ -19,7 +19,6 @@ make install
 rm -rf /etc/redis /var/lib/redis
 mkdir /etc/redis /var/lib/redis
 cp src/redis-server src/redis-cli /usr/local/bin
-cp redis.conf /etc/redis
 sed -e "s/^daemonize no$/daemonize yes/"  -e "s/^dir \.\//dir \/var\/lib\/redis\//" -e "s/^loglevel verbose$/loglevel notice/" -e "s/^logfile stdout$/logfile \/var\/log\/redis.log/" redis.conf > /etc/redis/redis.conf
 
 ####

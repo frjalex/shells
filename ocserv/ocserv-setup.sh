@@ -1,6 +1,8 @@
 #!/bin/sh
 
-
+####
+# 安装cisco anyconnetc 验证环境 centos 6.5
+####
 
 
 yum update -y
@@ -44,6 +46,9 @@ cd ocserv-0.8.4
 export LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
 LIBGNUTLS_CFLAGS="-I/opt/include/" LIBGNUTLS_LIBS="-L/opt/lib/ -lgnutls" LIBNL3_CFLAGS="-I/opt/include" LIBNL3_LIBS="-L/opt/lib/ -lnl-3 -lnl-route-3" ./configure --prefix=/opt/
 make && make install&&cd ..
+\cp ocserv-0.8.4/src/ocserv /opt/bin/
+\cp ocserv-0.8.4/src/occtl /opt/bin/
+\cp ocserv-0.8.4/src/ocpasswd /opt/bin/
 
 
 
@@ -88,14 +93,14 @@ mv ocserv /etc/pam.d/
 ####
 
 echo "export LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/">> /etc/profile
-echo "export PATH=$PATH:/opt/bin">> /etc/profile
+echo 'export PATH=$PATH:/opt/bin'>> /etc/profile
 source /etc/profile
 
 rm -rf  /etc/ocserv
 mkdir /etc/ocserv
 
 ####
-# 证书，没有就生产
+# 证书
 #
 ####
 
