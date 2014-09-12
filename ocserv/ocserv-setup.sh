@@ -167,6 +167,8 @@ mv profile.xml /etc/ocserv/
 ## ocserv 配置的IP地址是如下的，路由信息要对应
 #ipv4-network = 192.168.10.0
 #ipv4-netmask = 255.255.255.0
+#iptables -F -t nat
+#iptables -t nat -vnxL
 ####
 
 
@@ -174,5 +176,8 @@ iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
 iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o venet0 -j SNAT --to `ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 'NR==1 { print $1}'`
 
+iptables -t nat -A POSTROUTING -s 172.16.36.0/24 -j SNAT --to-source
 
+#iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o eth0 -j MASQUERADE
+iptables -A FORWARD -s 192.168.10.0/24 -j ACCEPT
 service iptables save
