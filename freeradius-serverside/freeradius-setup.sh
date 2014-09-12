@@ -45,12 +45,12 @@ wget -q --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shell
 mv radiusd.conf /etc/raddb/
 
 rm -f  /etc/raddb/sites-enabled/defaul
-wget -q --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/etc/raddb/sites-enabled/defaul
-mv defaul /etc/raddb/sites-enabled/
+wget -q --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/etc/raddb/sites-enabled/default
+mv default /etc/raddb/sites-enabled/
 
 
 rm -f  /etc/raddb/sql.conf
-wget -q --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/etc/raddb/sql.conf
+wget  --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/etc/raddb/sql.conf
 mv sql.conf  /etc/raddb/
 
 rm -f  /etc/raddb/dictionary
