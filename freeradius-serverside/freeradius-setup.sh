@@ -65,11 +65,4 @@ mv counter.conf  /etc/raddb/sql/mysql/
 
 
 
-echo "请输入认证服务器密码，其他服务器连接过来需要使用本密码验证："
-read pasw
-rm -f  /etc/raddb/clients.conf
-wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/etc/raddb/clients.conf
-mv clients.conf  /etc/raddb/
-
-sed -i "s/mima/`$pasw`/g" /etc/raddb/clients.conf
 
