@@ -48,13 +48,13 @@ restart() {
 
 status() {
 
-    echo -n $"Prints the status of the server "
+    echo -n $"Prints the status of the server: "
     occtl show status
 }
 
 users() {
 
-    echo -n $"Prints the connected users "
+    echo -n $"Prints the connected users: "
     occtl show users
 }
 

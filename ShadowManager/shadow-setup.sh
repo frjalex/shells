@@ -20,11 +20,10 @@ wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/web
 unzip web.zip
 rm -f web.zip
 
-#设置本机IP地址
-ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'
-echo '请输入本机公网IP:'
-read ip
-echo $ip
+
+
+
+
 
 #采用本机公网绑定，防止代理使用127.0.0.1访问本机资源
 rm -f  /var/proxy/web/conf/app.conf
@@ -33,7 +32,7 @@ echo "httpport = 5009">>/var/proxy/web/conf/app.conf
 echo "runmode = prod">>/var/proxy/web/conf/app.conf
 echo "autorender=false">>/var/proxy/web/conf/app.conf
 echo "enablegzip=true">>/var/proxy/web/conf/app.conf
-echo "httpaddr="$ip>>/var/proxy/web/conf/app.conf
+echo "httpaddr="`ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 'NR==1 { print $1}'`>>/var/proxy/web/conf/app.conf
 
 
 #加入Supervisord配置
@@ -95,6 +94,6 @@ user=root
 redirect_stderr=true
 EOF
 
-sed -i "s/127.0.0.1/$ip/g" /etc/supervisord.conf
+sed -i "s/127.0.0.1/`ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 'NR==1 { print $1}'`/g" /etc/supervisord.conf
 nano /etc/supervisord.conf /var/proxy/web/conf/app.conf
 supervisrod

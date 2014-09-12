@@ -192,7 +192,7 @@ service iptables save
 
 ####
 # 设置启动项
-wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/ocserv
+wget -q  https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/ocserv
 rm -f /etc/init.d/ocserv
 mv ocserv /etc/init.d/
 chmod 755 /etc/init.d/ocserv
@@ -200,3 +200,4 @@ chkconfig --add ocserv
 chkconfig --level 345 ocserv on
 
 service ocserv restart
+service ocserv status
