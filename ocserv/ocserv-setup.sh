@@ -188,3 +188,13 @@ iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -j SNAT --to-source `ifconfig 
 
 
 service iptables save
+
+
+####
+# 设置启动项
+wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/ocserv
+rm -f /etc/init.d/ocserv
+mv ocserv /etc/init.d/
+chmod 755 /etc/init.d/ocserv
+chkconfig --add ocserv
+chkconfig --level 345 ocserv on
