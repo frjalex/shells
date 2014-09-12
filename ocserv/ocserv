@@ -9,12 +9,12 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
 
-LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
+export LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
 export PATH=$PATH:/opt/bin
 
 
 DAEMON_ARGS="-c /etc/ocserv/ocserv.conf"
-OCCTL=/opt/bin/occtl
+occtl=/opt/bin/occtl
 
 ocserv="/opt/bin/ocserv"
 prog=$(basename $ocserv)
@@ -46,6 +46,11 @@ restart() {
     start
 }
 
+status() {
+
+    echo -n $"show status: "
+    occtl show status
+}
 
 
 case "$1" in
@@ -59,7 +64,9 @@ case "$1" in
     restart)
         $1
         ;;
-
+    status)
+        $1
+        ;;
 
     *)
         echo $"Usage: $0 {start|stop|status|restart}"
