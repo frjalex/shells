@@ -16,7 +16,7 @@ lockfile=/var/lock/subsys/ocserv
 start() {
     [ -x $ocserv ] || exit 5
     echo -n $"Starting $prog: "
-    daemon $ocserv $DAEMON_ARGS
+    $ocserv $DAEMON_ARGS
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
