@@ -198,3 +198,6 @@ mv ocserv /etc/init.d/
 chmod 755 /etc/init.d/ocserv
 chkconfig --add ocserv
 chkconfig --level 345 ocserv on
+
+service ocserv stop
+service ocserv start

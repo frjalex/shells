@@ -1,6 +1,6 @@
 #!/bin/sh
 LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
-
+export PATH=$PATH:/opt/bin
 
 DAEMON=/opt/bin/ocserv
 PIDFILE=/var/run/ocserv.pid
@@ -16,7 +16,7 @@ lockfile=/var/lock/subsys/ocserv
 start() {
     [ -x $ocserv ] || exit 5
     echo -n $"Starting $prog: "
-    $ocserv $DAEMON_ARGS
+    daemon $ocserv $DAEMON_ARGS
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
