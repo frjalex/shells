@@ -151,13 +151,16 @@ sysctl -p
 # ocserv correctly installed.
 # Download config file
 ####
+rm -f /etc/ocserv/ocserv.conf
 wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/etc/ocserv/ocserv.conf
 mv ocserv.conf /etc/ocserv/
+
 
 ####
 # 安装客户端第一次访问时同步的配置文件
 # Download profile.xml file
 ####
+rm -f /etc/ocserv/profile.xml
 wget -q https://raw.githubusercontent.com/zihuxinyu/shells/master/ocserv/etc/ocserv/profile.xml
 mv profile.xml /etc/ocserv/
 
@@ -174,10 +177,9 @@ mv profile.xml /etc/ocserv/
 
 iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
-iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o venet0 -j SNAT --to `ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 'NR==1 { print $1}'`
-
-iptables -t nat -A POSTROUTING -s 172.16.36.0/24 -j SNAT --to-source
-
-#iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o eth0 -j MASQUERADE
 iptables -A FORWARD -s 192.168.10.0/24 -j ACCEPT
+
+iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -j SNAT --to-source `ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 'NR==1 { print $1}'`
+
+
 service iptables save

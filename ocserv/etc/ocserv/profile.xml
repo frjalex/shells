@@ -20,13 +20,17 @@
 </ClientInitialization>
 
 <ServerList>
-<HostEntry>
-<HostName>美国德克萨斯</HostName>
-<HostAddress>dkss.8dat.com</HostAddress>
-</HostEntry>
-<HostEntry>
-<HostName>新加坡</HostName>
-<HostAddress>xjp.8dat.com</HostAddress>
-</HostEntry>
+    <HostEntry>
+        <HostName>美国1</HostName>
+        <HostAddress>dkss.8dat.com</HostAddress>
+    </HostEntry>
+    <HostEntry>
+        <HostName>新加坡1</HostName>
+        <HostAddress>xjp.8dat.com</HostAddress>
+    </HostEntry>
+    <HostEntry>
+        <HostName>新加坡2</HostName>
+        <HostAddress>xjpdo.8dat.com</HostAddress>
+    </HostEntry>
 </ServerList>
 </AnyConnectProfile>
