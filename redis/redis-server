@@ -30,8 +30,8 @@ REDIS_CONF_FILE="/etc/redis/redis.conf"
 lockfile=/var/lock/subsys/redis
 
 start() {
-    [ -x $redis ] || exit 5
-    [ -f $REDIS_CONF_FILE ] || exit 6
+    #[ -x $redis ] || exit 5
+    #[ -f $REDIS_CONF_FILE ] || exit 6
     echo -n $"Starting $prog: "
     daemon $redis $REDIS_CONF_FILE
     retval=$?

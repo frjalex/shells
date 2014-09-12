@@ -48,10 +48,21 @@ restart() {
 
 status() {
 
-    echo -n $"show status: "
+    echo -n $"Prints the status of the server "
     occtl show status
 }
 
+users() {
+
+    echo -n $"Prints the connected users "
+    occtl show users
+}
+
+users() {
+
+    echo -n $"Reloads the server configuration: "
+    occtl reload
+}
 
 case "$1" in
     start)
@@ -67,9 +78,15 @@ case "$1" in
     status)
         $1
         ;;
+    users)
+        $1
+        ;;
+    reload)
+        $1
+        ;;
 
     *)
-        echo $"Usage: $0 {start|stop|status|restart}"
+        echo $"Usage: $0 {start|stop|status|restart|users|reload}"
         exit 2
 esac
 
