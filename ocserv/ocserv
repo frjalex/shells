@@ -58,7 +58,7 @@ users() {
     occtl show users
 }
 
-users() {
+reload() {
 
     echo -n $"Reloads the server configuration: "
     occtl reload
