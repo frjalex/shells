@@ -96,4 +96,5 @@ redirect_stderr=true
 EOF
 
 sed -i "s/127.0.0.1/$ip/g" /etc/supervisord.conf
-nano /etc/supervisord.conf
+nano /etc/supervisord.conf /var/proxy/web/conf/app.conf
+supervisrod

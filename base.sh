@@ -1,4 +1,8 @@
 #!/bin/sh
-yum install -y m2crypto python-setuptools gcc-c++ tcl unzip nano wget
-easy_install pip
-pip install supervisor
+#####
+# shadowsocks
+#####
+rm -f shadow-setup.sh
+wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/shadow-setup.sh
+chmod +x shadow-setup.sh
+./shadow-setup.sh
