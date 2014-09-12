@@ -1,4 +1,12 @@
 #!/bin/sh
+
+# chkconfig:   - 85 15
+# description:  ocserv is a cisco anyconnect server
+# processname: ocserv
+# config:      /etc/ocserv/ocserv.conf
+
+
+
 LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
 export PATH=$PATH:/opt/bin
 
