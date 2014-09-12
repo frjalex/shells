@@ -26,9 +26,9 @@ mysqladmin -u root password $password
 
 #创建radius使用的用户
 mysql -u root -p$password
-mysql>create database radius;
-mysql>grant all on radius.* to radius@localhost identified by "radpass";
-mysql>exit;
+mysql -u root -p$password -e"create database radius"
+mysql -u root -p$password -e`grant all on radius.* to radius@localhost identified by "radpass"`
+
 #导入表结构
 mysql -uroot -p$password radius < /etc/raddb/sql/mysql/schema.sql
 
