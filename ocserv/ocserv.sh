@@ -1,67 +1,108 @@
 #!/bin/sh
-### BEGIN INIT INFO
-# Provides:          ocserv
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-### END INIT INFO
-# Copyright Rene Mayrhofer, Gibraltar, 1999
-# This script is distibuted under the GPL
+# From - http://www.codingsteps.com/install-redis-2-6-on-amazon-ec2-linux-ami-or-centos/
+# 
+# redis - this script starts and stops the redis-server daemon
+# Originally from - https://raw.github.com/gist/257849/9f1e627e0b7dbe68882fa2b7bdb1b2b263522004/redis-server
+#
+# chkconfig:   - 85 15 
+# description:  Redis is a persistent key-value database
+# processname: redis-server
+# config:      /etc/redis/redis.conf
+# config:      /etc/sysconfig/redis
+# pidfile:     /var/run/redis.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/bin
 DAEMON=/opt/bin/ocserv
 PIDFILE=/var/run/ocserv.pid
 DAEMON_ARGS="-c /etc/ocserv/ocserv.conf"
+OCCTL=/opt/bin/occtl
+
+ocserv="/opt/bin/ocserv"
+prog=$(basename $ocserv)
+
+lockfile=/var/lock/subsys/ocserv
+
+
+start() {
+    [ -x $ocserv ] || exit 5
+    echo -n $"Starting $prog: "
+    daemon $ocserv $DAEMON_ARGS
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    echo -n $"Reloading $prog: "
+    killproc $redis -HUP
+    RETVAL=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    $OCCTL show status
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
 
 case "$1" in
-start)
-if [ ! -r $PIDFILE ]; then
-echo -n "Starting OpenConnect VPN Server Daemon: "
-start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
-$DAEMON_ARGS > /dev/null
-echo "ocserv."
-else
-echo -n "OpenConnect VPN Server is already running.\n\r"
-exit 0
-fi
-;;
-stop)
-echo -n "Stopping OpenConnect VPN Server Daemon: "
-start-stop-daemon --stop --quiet --pidfile $PIDFILE --exec $DAEMON
-echo "ocserv."
-rm -f $PIDFILE
-;;
-force-reload|restart)
-echo "Restarting OpenConnect VPN Server: "
-$0 stop
-sleep 1
-$0 start
-;;
-status)
-if [ ! -r $PIDFILE ]; then
-# no pid file, process doesn't seem to be running correctly
-exit 3
-fi
-PID=`cat $PIDFILE | sed 's/ //g'`
-EXE=/proc/$PID/exe
-if [ -x "$EXE" ] &&
-[ "`ls -l \"$EXE\" | cut -d'>' -f2,2 | cut -d' ' -f2,2`" = \
-"$DAEMON" ]; then
-# ok, process seems to be running
-exit 0
-elif [ -r $PIDFILE ]; then
-# process not running, but pidfile exists
-exit 1
-else
-# no lock file to check for, so simply return the stopped status
-exit 3
-fi
-;;
-*)
-echo "Usage: /etc/init.d/ocserv {start|stop|restart|force-reload|status}"
-exit 1
-;;
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+	    ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
 esac
 
-exit 0
