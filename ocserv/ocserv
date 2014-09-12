@@ -2,8 +2,7 @@
 LD_LIBRARY_PATH=/opt/lib/:/opt/lib64/
 export PATH=$PATH:/opt/bin
 
-DAEMON=/opt/bin/ocserv
-PIDFILE=/var/run/ocserv.pid
+
 DAEMON_ARGS="-c /etc/ocserv/ocserv.conf"
 OCCTL=/opt/bin/occtl
 
@@ -39,7 +38,7 @@ restart() {
 
 reload() {
     echo -n $"Reloading $prog: "
-    killproc $redis -HUP
+    killproc $ocserv -HUP
     RETVAL=$?
     echo
 }
