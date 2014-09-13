@@ -30,6 +30,7 @@ mysql -u root -p$password -e`grant all on radius.* to radius@localhost identifie
 
 #导入表结构
 mysql -uroot -p$password radius < /etc/raddb/sql/mysql/schema.sql
+mysql -uroot -p$password radius < /etc/raddb/sql/mysql/nas.sql
 
 wget -q --no-check-certificate https://raw.githubusercontent.com/zihuxinyu/shells/master/freeradius-serverside/radius-db.sql
 #导入表初始化结构
