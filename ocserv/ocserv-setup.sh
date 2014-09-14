@@ -64,22 +64,6 @@ cd ..
 
 
 ####
-# 创建认证配置文件
-#
-####
-
-mkdir /etc/raddb
-
-
-#设置radis 认证服务器IP
-echo '请输入radis 认证服务器IP:'
-read ip
-echo '请输入radis 认证服务器秘钥:'
-read secret
-echo $ip    $secret >>/etc/pam_radius_auth.conf
-cp /etc/pam_radius_auth.conf /etc/raddb/server
-
-####
 # 下载ocserv 使用PAM认证管理radis的文件
 # Download config file
 ####
@@ -201,3 +185,21 @@ chkconfig --level 345 ocserv on
 
 service ocserv restart
 service ocserv status
+
+
+
+####
+# 创建认证配置文件
+#
+####
+
+mkdir /etc/raddb
+
+
+#设置radis 认证服务器IP
+echo '请输入radis 认证服务器IP:'
+read ip
+echo '请输入radis 认证服务器秘钥:'
+read secret
+echo $ip    $secret >>/etc/pam_radius_auth.conf
+cp /etc/pam_radius_auth.conf /etc/raddb/server
