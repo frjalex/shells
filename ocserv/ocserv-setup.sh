@@ -102,9 +102,9 @@ cert_signing_key
 crl_signing_key
 _EOF_
 
-    certtool --generate-self-signed --load-privkey ca-key.pem \
-    --template ca.tmpl --outfile ca-cert.pem
-    certtool --generate-privkey --outfile server-key.pem
+certtool --generate-self-signed --load-privkey ca-key.pem  \
+ --template ca.tmpl --outfile ca-cert.pem
+certtool --generate-privkey --outfile server-key.pem
 
 cat << _EOF_ >server.tmpl
 cn = "8dat.com VPN"
@@ -112,11 +112,11 @@ organization  = "8dat.com"
 serial = 2
 expiration_days = 3650
 signing_key
-encryption_key #only if the generated key is an RSA one
+encryption_key
 tls_www_server
 _EOF_
 
-    certtool --generate-certificate --load-privkey server-key.pem \
+certtool --generate-certificate --load-privkey server-key.pem \
     --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem \
     --template server.tmpl --outfile server-cert.pem
 
