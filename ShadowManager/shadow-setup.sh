@@ -8,10 +8,12 @@ mkdir /var/proxy
 mkdir /var/proxy/web
 
 cd /var/proxy/web/
+rm -f ShadowManage
 wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/ShadowManage  --no-check-certificate
 chmod +x ShadowManage
 
 cd /var/proxy/
+rm -f server
 wget https://raw.githubusercontent.com/zihuxinyu/shells/master/ShadowManager/server  --no-check-certificate
 chmod +x server
 
