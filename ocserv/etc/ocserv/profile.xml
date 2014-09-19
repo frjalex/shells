@@ -21,16 +21,17 @@
 
 <ServerList>
     <HostEntry>
-        <HostName>美国1</HostName>
+        <HostName>美国德克萨斯</HostName>
         <HostAddress>dkss.8dat.com</HostAddress>
+    </HostEntry>
+
+    <HostEntry>
+        <HostName>新加坡1</HostName>
+        <HostAddress>xjpdo.8dat.com</HostAddress>
     </HostEntry>
     <HostEntry>
         <HostName>美国西雅图</HostName>
         <HostAddress>xyt.8dat.com</HostAddress>
-    </HostEntry>
-    <HostEntry>
-        <HostName>新加坡1</HostName>
-        <HostAddress>xjpdo.8dat.com</HostAddress>
     </HostEntry>
     <HostEntry>
         <HostName>新加坡2</HostName>
